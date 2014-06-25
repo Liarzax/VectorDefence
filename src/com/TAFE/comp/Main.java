@@ -19,8 +19,11 @@ import org.newdawn.slick.particles.ParticleEmitter;
 import org.newdawn.slick.particles.ParticleSystem;
 
 public class Main extends BasicGame{
+	final static int majorVersion = 1, minorVersion = 0, bugfix = 1, buildRev = 2;
+	final static String devStage = "Alpha";
+	final static String version = "v"+majorVersion+"."+minorVersion+"."+bugfix+"-"+devStage+"   build."+buildRev;
+	final static String title = "Vector Invasion "+version;
 	
-						  // Width 800, Height 640 // 40 area for display
 	private static final int WIDTH = 800,
 							 HEIGHT = 440,
 							 FPS_LIMIT = 60;
@@ -36,8 +39,6 @@ public class Main extends BasicGame{
 	private EnemyHandler 	 enemies 	= new EnemyHandler();
 	private CollisionHandler collisions = new CollisionHandler();
 	private HUD 			 hud 		= new HUD();
-	
-	private static String title = "Vector Invasion v0.1";
 	
 	public Main(String title){
 		super(title);

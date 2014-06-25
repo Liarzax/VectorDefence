@@ -14,6 +14,7 @@ How to Play
 
 Avoid enemies - Red/Blue Squares.
 Collect Power-ups - Yellow Squares.
+You have a little Cyan shield, it wont last long.
 
 Survive...
 

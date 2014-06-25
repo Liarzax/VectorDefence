@@ -37,7 +37,7 @@ public class ShieldSystem {
 	
 	public void renderShieldSystem(Graphics g) {
 		if (removeShield) {
-			
+			//shield.setRadius(0);
 		}
 		else if (shieldEnabled && shield != null) {
 			g.setColor(Color.cyan);
@@ -49,7 +49,9 @@ public class ShieldSystem {
 		shieldCur -= dammage;
 		if (shieldCur < 0) {
 			shieldEnabled = false;
-			//shield = null;
+			
+			removeShield = true;
+			shield.setRadius(0);
 		}
 	}
 	

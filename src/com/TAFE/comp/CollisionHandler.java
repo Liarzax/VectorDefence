@@ -34,10 +34,11 @@ public class CollisionHandler {
 				if(bullets.bullets.get(b).bullet.intersects(player.shieldSystem.shield) && bullets.bullets.get(b).getBulletType() == 1 && player.shieldSystem.shieldEnabled) {
 					player.shieldSystem.dammageShield(bullets.bullets.get(b).getBulletDammage());
 					bullets.bullets.get(b).needsToRemove = true;
-					player.shieldSystem.removeShield = true;
+					//player.shieldSystem.removeShield = true;
+					//player.shieldSystem.shield.setRadius(0);
 				}
 				// else if the bullet hits the player and is the enemies, damage the player
-				else if (bullets.bullets.get(b).bullet.intersects(player.ship) && bullets.bullets.get(b).getBulletType() == 1) {
+				if (bullets.bullets.get(b).bullet.intersects(player.ship) && bullets.bullets.get(b).getBulletType() == 1) {
 					player.processDammage(bullets.bullets.get(b).getBulletDammage());
 					bullets.bullets.get(b).needsToRemove = true;
 				}
