@@ -18,9 +18,13 @@ public class CollisionHandler {
 			for (int b = 0; b < bullets.getAmmountOfBullets(); b++) {
 				for (int e = 0; e < enemies.getAmmountOfEnemies(); e++) {
 					// if collide, damage enemy, remove bullet.
-					// type 0 = normal red, type 1 = power up yellow, type 2 = blue can fire back!
+					// ship type 0 = normal red, type 1 = power up yellow, type 2 = blue can fire back!
+					// bullet type 0 = players, bullet type 1 = enemies
 					if (bullets.bullets.get(b).bullet.intersects(enemies.enemiesShip.get(e).ship) && bullets.bullets.get(b).getBulletType() == 0 && enemies.enemiesShip.get(e).type != 1) {
 						enemies.enemiesShip.get(e).processDammage(bullets.bullets.get(b).getBulletDammage());
+						bullets.bullets.get(b).needsToRemove = true;
+					}
+					else if (bullets.bullets.get(b).bullet.intersects(enemies.enemiesShip.get(e).ship) && bullets.bullets.get(b).getBulletType() == 1 && enemies.enemiesShip.get(e).type != 1) {
 						bullets.bullets.get(b).needsToRemove = true;
 					}
 				}
