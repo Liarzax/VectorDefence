@@ -19,7 +19,7 @@ import org.newdawn.slick.particles.ParticleEmitter;
 import org.newdawn.slick.particles.ParticleSystem;
 
 public class Main extends BasicGame{
-	final static int majorVersion = 1, minorVersion = 0, bugfix = 1, buildRev = 2;
+	final static int majorVersion = 1, minorVersion = 0, bugfix = 2, buildRev = 3;
 	final static String devStage = "Alpha";
 	final static String version = "v"+majorVersion+"."+minorVersion+"."+bugfix+"-"+devStage+"   build."+buildRev;
 	final static String title = "Vector Invasion "+version;
