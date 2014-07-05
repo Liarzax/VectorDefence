@@ -1,4 +1,4 @@
-Vector Deffence
+Vector Defence
 ====
 
 Solo Entry.
@@ -10,6 +10,8 @@ How to Play
 
 'ESC'		Key to Quit Game.
 'W,A,S,D' 	Keys to Move.
+		OR
+'U,L,D,R'	Arrow Keys to Move
 'Space' 	Hold Key to Fire effectively.
 
 Avoid enemies - Red/Blue Squares.
@@ -21,7 +23,11 @@ Survive...
 
 Changes
 ==================
-v1.0.3-Alpha build.4;
+v0.1.3-Alpha build.5;
+ - Fixed Versioning.
+ - Added the ability to use W,A,S,D or the UP, DOWN, LEFT, RIGHT Arrows to move the ship.
+
+v0.1.3-Alpha build.4;
  - Bullets from both the player and enemies, ignore/go through power-ups (Sort of a bug since power-ups should be ignored).
  - Bullets from the enemies stop when hitting another enemy, but does not damage the receiving enemy.
  -- Minor Optimization for late-game, when frame rate gets munched and also probably to hard for player, lol.

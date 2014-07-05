@@ -20,10 +20,10 @@ import org.newdawn.slick.particles.ParticleSystem;
 
 public class Main extends BasicGame{
 	
-	final static int majorVersion = 1, minorVersion = 0, bugfix = 3, buildRev = 4;
+	final static int majorVersion = 0, minorVersion = 1, bugfix = 3, buildRev = 5;
 	final static String devStage = "Alpha";
 	final static String version = "v"+majorVersion+"."+minorVersion+"."+bugfix+"-"+devStage+"   build."+buildRev;
-	final static String title = "Vector Invasion "+version;
+	final static String title = "Vector Defence "+version;
 	
 	private static final int WIDTH = 800,
 							 HEIGHT = 440,
@@ -114,16 +114,16 @@ public class Main extends BasicGame{
 		// if not dead.
 		if(!player.needsToRemove) {
 			// process input.
-			if (input.isKeyDown(Keyboard.KEY_W)){
+			if (input.isKeyDown(Keyboard.KEY_W) || input.isKeyDown(Keyboard.KEY_UP)){
 				player.handleShipUp(delta);
 			}
-			if (input.isKeyDown(Keyboard.KEY_S)){
+			if (input.isKeyDown(Keyboard.KEY_S) || input.isKeyDown(Keyboard.KEY_DOWN)){
 				player.handleShipDown(delta);
 			}
-			if (input.isKeyDown(Keyboard.KEY_A)){
+			if (input.isKeyDown(Keyboard.KEY_A) || input.isKeyDown(Keyboard.KEY_LEFT)){
 				player.handleShipLeft(delta);
 			}
-			if (input.isKeyDown(Keyboard.KEY_D)){
+			if (input.isKeyDown(Keyboard.KEY_D) || input.isKeyDown(Keyboard.KEY_RIGHT)){
 				player.handleShipRight(delta);
 			}
 			
