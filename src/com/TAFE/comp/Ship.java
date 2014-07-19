@@ -20,13 +20,15 @@ public class Ship {
 	private int healthMax = 3;
 	private int healthCur = healthMax;
 	public boolean needsToRemove = false;
+	public boolean deathFromPlayer = false;
+	public boolean collideWithPlayer = false;
 	
-	// type 0 = normal red, type 1 = power up yellow, type 2 = blue can fire back!
+	// ship type 0 = normal red, type 1 = power up yellow, type 2 = blue can fire back!
 	public int type = 0;
 	
-	private int fireRate = 20;
-	private int fireCooldown = getFireRate();
-	private int dammage = 1;
+	private Weapon weapon = new Weapon();
+	
+	// maby depend this on hull type, same as hp, maxhp, etc?
 	private int shipCollisionDammage = 1;
 	
 	// lets give the ships a SHIELD!
@@ -50,22 +52,24 @@ public class Ship {
 	
 	public void updateShip() {		
 		// check if out of bounds. width 800/ height 400
-		if (posNext.x > 800) {
-			posNext.x = 800;
+		if (posNext.x > Main.PLAYWIDTHMAX) {
+			posNext.x = Main.PLAYWIDTHMAX;
 		}
-		if (posNext.x < 1) {
-			posNext.x = 1;
+		if (posNext.x < Main.PLAYWIDTHMIN) {
+			posNext.x = Main.PLAYWIDTHMIN;
 		}
-		if (posNext.y > 400) {
-			posNext.y = 400;
+		if (posNext.y > Main.PLAYHEIGHT) {
+			posNext.y = Main.PLAYHEIGHT;
 		}
 		if (posNext.y < 1) {
 			posNext.y = 1;
 		}
 		
 		setShipNewPosition();
-		if(shieldSystem.shieldEnabled = true) {
-			shieldSystem.updateShieldSystem(posCur.x, posCur.y);
+		if (shieldSystem != null) {
+			if(shieldSystem.shieldEnabled = true) {
+				shieldSystem.updateShieldSystem(posCur.x, posCur.y);
+			}
 		}
 	}
 	
@@ -73,8 +77,10 @@ public class Ship {
 		g.setColor(color);
 		g.draw(ship);
 		
-		if(shieldSystem.shieldEnabled = true) {
-			shieldSystem.renderShieldSystem(g);
+		if (shieldSystem != null) {
+			if(shieldSystem.shieldEnabled = true) {
+				shieldSystem.renderShieldSystem(g);
+			}
 		}
 	}
 	
@@ -138,6 +144,7 @@ public class Ship {
 		healthCur -= dammage;
 		if (healthCur < 1) {
 			needsToRemove = true;
+			//deathFromPlayer = true;
 		}
 		//return health;
 	}
@@ -157,26 +164,32 @@ public class Ship {
 	}
 
 	public int getFireCooldown() {
-		return fireCooldown;
+		return weapon.getFireCooldown();
 	}
 
 	public void setFireCooldown(int fireCooldown) {
-		this.fireCooldown = fireCooldown;
+		this.weapon.setFireCooldown(fireCooldown);
 	}
 
 	public int getFireRate() {
-		return fireRate;
+		return this.weapon.getFireRate();
 	}
 
 	public void setFireRate(int fireRate) {
-		this.fireRate = fireRate;
+		this.weapon.setFireRate(fireRate);
 	}
 
-	public void proccessPowerup(Ship ship) {
+	public void proccessPowerup(Ship ship, int type) {
 		// powerup augments ship!
-		ship.fireRate -= 2;
-		ship.setDammage(ship.getDammage() + 1);
-		
+		if (type == 1) {
+			ship.weapon.fireRate -= 2;
+			ship.setDammage(ship.getDammage() + 1);
+		}
+		else if (type == 2) {
+			if (shieldSystem != null) {
+				shieldSystem.regenShield();
+			}
+		}
 	}
 
 	public int getShipCollisionDammage() {
@@ -188,11 +201,11 @@ public class Ship {
 	}
 
 	public int getDammage() {
-		return dammage;
+		return this.weapon.dammage;
 	}
 
 	public void setDammage(int dammage) {
-		this.dammage = dammage;
+		this.weapon.dammage = dammage;
 	}
 
 	public int getHealthMax() {
@@ -210,6 +223,36 @@ public class Ship {
 	public void setHealthCur(int healthCur) {
 		this.healthCur = healthCur;
 	}
+
+	public Vector2f getShipSize() {
+		return shipSize;
+	}
+
+	public void setShipSize(Vector2f shipSize) {
+		this.shipSize = shipSize;
+	}
+	
+	public String getWeaponName() {
+		return this.weapon.getName();
+	}
+
+	public Weapon getWeapon() {
+		return weapon;
+	}
+
+	public void setWeapon(Weapon weapon) {
+		this.weapon = weapon;
+	}
+
+	public ShieldSystem getShieldSystem() {
+		return shieldSystem;
+	}
+
+	public void setShieldSystem(ShieldSystem shieldSystem) {
+		this.shieldSystem = shieldSystem;
+	}
+	
+	
 	
 	
 }

@@ -41,10 +41,16 @@ public class Bullet {
 		if (bulletType == 0) {
 			handleBulletRight(delta);
 			setBulletNewPoss();
+			if (this.posCur.x >= Main.OFFSCREENWIDTHBUFFER) {
+				this.needsToRemove = true;
+			}
 		}
 		else if (bulletType == 1) {
 			handleBulletLeft(delta);
 			setBulletNewPoss();
+			if (this.posCur.x <= Main.PLAYWIDTHMIN) {
+				this.needsToRemove = true;
+			}
 		}
 	}
 	

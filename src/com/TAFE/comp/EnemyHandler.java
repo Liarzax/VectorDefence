@@ -13,6 +13,7 @@ public class EnemyHandler {
 	//private Vector2f eSpawnPoint;
 	public List<Ship> enemiesShip;
 	// powerup chance = 10%, PoweredEnemy chance = 45%
+	private int poweredShieldChance = 95;
 	private int powerUpChance = 90;
 	private int poweredEnemyChance = 65;
 	
@@ -28,6 +29,25 @@ public class EnemyHandler {
 	// dif enemy healths
 	private int hpStrong = 4;
 	private int hpStandard = 2;
+	
+	// this is unused as of yet.
+	// type 0 = normal red, type 1 = power up yellow, type 2 = blue can fire back!
+	/*public enum shipType {
+	    enemyRed(0), powerUpYellow(1), enemyBlue(2);
+
+	    private int type;
+
+	    shipType(int type) {
+	        this.type = type;
+	    }
+
+	    public int getType() {
+	        return type;
+	    }
+	}*/
+	// usage: shipType enemy = shipType.enemyRed;
+	
+	
 	
 	public void EnemyHandler() {
 		
@@ -76,7 +96,13 @@ public class EnemyHandler {
 		if (!enemiesShip.isEmpty()) {
 			for (int i = 0; i < enemiesShip.size(); i++) {
 				enemiesShip.get(i).handleShipLeft(delta);
+				// If enemy ship is outside render range (to far to the left), remove ship of screen.
+				if (enemiesShip.get(i).getPosCur().getX() < Main.PLAYWIDTHMIN) {
+					enemiesShip.get(i).needsToRemove = true;
+					//break;
+				}
 				enemiesShip.get(i).setShipNewPosition();
+				
 				if (enemiesShip.get(i).type == 2) {
 					// 0 = bullet type player, 1 = bullet type enemy (maby enemy bullets should be 2 if type 2 enemies fire, confusion!)
 					// check if enemy can shoot, then shoot.
@@ -86,7 +112,7 @@ public class EnemyHandler {
 					}
 					else {
 						// 0 = bullet type player, 1 = bullet type enemy
-						bullets.createNewBullet(enemiesShip.get(i).posCur.x, enemiesShip.get(i).posCur.y, enemiesShip.get(i).getDammage(), 1);
+						bullets.createNewBullet(enemiesShip.get(i).posCur.x - 1, enemiesShip.get(i).posCur.y, enemiesShip.get(i).getDammage(), 1);
 						enemiesShip.get(i).setFireCooldown(0);
 					}
 					
@@ -106,6 +132,9 @@ public class EnemyHandler {
 				else if (enemiesShip.get(i).type == 2) {
 					enemiesShip.get(i).renderShip(g, Color.blue);
 				}
+				else if (enemiesShip.get(i).type == 3) {
+					enemiesShip.get(i).renderShip(g, Color.cyan);
+				}
 				else {
 					enemiesShip.get(i).renderShip(g, color);
 				}
@@ -116,7 +145,7 @@ public class EnemyHandler {
 	
 	public void spawnEnemy(float spawnX) {
 		Ship enemy = new Ship();
-		int eSpawnPointY = generateRandomNumber(1, 400);
+		int eSpawnPointY = generateRandomNumber(1, Main.PLAYHEIGHT);
 		enemy.initShip(spawnX, eSpawnPointY, 10, 10);
 		enemiesShip.add(enemy);
 		totalEnemiesSpawned++;
@@ -125,26 +154,44 @@ public class EnemyHandler {
 	private void spawnEnemyCluster(float spawnX, int ammountToSpawn) {
 		// timer till spawn, so not all at once.
 		int randX = generateRandomNumber((int)spawnX-10,  (int)spawnX+10);
+		
+		// temp vriables
+		Vector2f tempSize = new Vector2f(10,10);
+		
+		// start spawning
 		for (int i = 0; i < ammountToSpawn; i++) {
 			Ship enemy = new Ship();
 			int possiblePowerup = generateRandomNumber(1,  100);
+			// new shield powerup spawn!
+			if(possiblePowerup > poweredShieldChance) {
+				// type 3 is shield regen powerup!
+				enemy.type = 3;
+				tempSize = new Vector2f(8,8);
+				// set state to powerup
+			}
 			if(possiblePowerup > powerUpChance) {
 				// type 1 is powerup!
 				enemy.type = 1;
+				tempSize = new Vector2f(12,12);
+				// set state to powerup
 			}
 			else if(possiblePowerup > poweredEnemyChance) {
 				// type 2 can fire at the player!
 				enemy.type = 2;
 				enemy.setFireRate((80 - difficulty));
 				enemy.setShipHealth((hpStrong + difficulty));
+				tempSize = new Vector2f(14,10);
+				// set state to blue
+				
 			}
 			else {
 				// type 0 is standard enemy
 				enemy.type = 0;
 				enemy.setShipHealth((hpStandard + difficulty));
+				// set state to red
 			}
-			int eSpawnPointY = generateRandomNumber(1, 400);
-			enemy.initShip(randX, eSpawnPointY, 10, 10);
+			int eSpawnPointY = generateRandomNumber(1, Main.PLAYHEIGHT);
+			enemy.initShip(randX, eSpawnPointY, tempSize.x, tempSize.y);
 			enemiesShip.add(enemy);
 			totalEnemiesSpawned++;
 			

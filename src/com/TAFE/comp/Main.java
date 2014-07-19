@@ -20,16 +20,16 @@ import org.newdawn.slick.particles.ParticleSystem;
 
 public class Main extends BasicGame{
 	
-	final static int majorVersion = 0, minorVersion = 1, bugfix = 3, buildRev = 5;
+	final static int majorVersion = 0, minorVersion = 1, bugfix = 3, buildRev = 6;
 	final static String devStage = "Alpha";
 	final static String version = "v"+majorVersion+"."+minorVersion+"."+bugfix+"-"+devStage+"   build."+buildRev;
-	final static String title = "Vector Defence "+version;
+	final static String title = "Vector Defense "+version;
 	
-	private static final int WIDTH = 800,
-							 HEIGHT = 440,
+	public static final int  WIDTH = 800, PLAYWIDTHMAX = 800, PLAYWIDTHMIN = 100, OFFSCREENWIDTHBUFFER = 815,
+							 HEIGHT = 440, PLAYHEIGHT = 400, OFFSCREENHEIGHTBUFFER = 455,
 							 FPS_LIMIT = 60;
 	
-	private static boolean showFPS = true,
+	public static boolean  showFPS = true,
 						   fullscreen = false,
 						   debug = true;
 	
@@ -59,7 +59,7 @@ public class Main extends BasicGame{
 		
 		
 		//temp x, y, width, height (25/10 is small).
-		player.initShip(35, 200, 25, 10);
+		player.initShip(115, 200, 25, 10);
 		// force player to have 5 hp
 		player.setShipHealth(5);
 		// force player to be a bit quicker

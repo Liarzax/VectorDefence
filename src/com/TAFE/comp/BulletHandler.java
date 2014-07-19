@@ -26,7 +26,7 @@ public class BulletHandler {
 				bullets.get(i).updateBullet(delta);
 				
 				// if outside range, remove bullet. Width = 800, Height = 400
-				if (bullets.get(i).posCur.x > 800) {
+				if (bullets.get(i).posCur.x > Main.OFFSCREENWIDTHBUFFER) {
 					bullets.remove(bullets.get(i));
 				}
 			}

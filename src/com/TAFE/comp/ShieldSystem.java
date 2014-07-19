@@ -56,7 +56,25 @@ public class ShieldSystem {
 	}
 	
 	public void regenShield() {
-		
+		if(removeShield) {
+			removeShield = false;
+			shieldEnabled = true;
+			if (shieldCur > shieldMax) {
+				shieldCur = shieldMax;
+			}
+			else {
+				shieldCur++;
+			}
+			
+		}
+		else {
+			if (shieldCur > shieldMax) {
+				shieldCur = shieldMax;
+			}
+			else {
+				shieldCur++;
+			}
+		}
 	}
 
 	public boolean isShieldEnabled() {
