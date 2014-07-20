@@ -20,7 +20,7 @@ import org.newdawn.slick.particles.ParticleSystem;
 
 public class Main extends BasicGame{
 	
-	final static int majorVersion = 0, minorVersion = 1, bugfix = 3, buildRev = 6;
+	final static int majorVersion = 0, minorVersion = 1, bugfix = 4, buildRev = 7;
 	final static String devStage = "Alpha";
 	final static String version = "v"+majorVersion+"."+minorVersion+"."+bugfix+"-"+devStage+"   build."+buildRev;
 	final static String title = "Vector Defense "+version;

@@ -67,7 +67,7 @@ public class Ship {
 		
 		setShipNewPosition();
 		if (shieldSystem != null) {
-			if(shieldSystem.shieldEnabled = true) {
+			if(shieldSystem.isShieldEnabled()) {
 				shieldSystem.updateShieldSystem(posCur.x, posCur.y);
 			}
 		}
@@ -78,7 +78,7 @@ public class Ship {
 		g.draw(ship);
 		
 		if (shieldSystem != null) {
-			if(shieldSystem.shieldEnabled = true) {
+			if(shieldSystem.isShieldEnabled()) {
 				shieldSystem.renderShieldSystem(g);
 			}
 		}
@@ -185,10 +185,15 @@ public class Ship {
 			ship.weapon.fireRate -= 2;
 			ship.setDammage(ship.getDammage() + 1);
 		}
-		else if (type == 2) {
-			if (shieldSystem != null) {
-				shieldSystem.regenShield();
+		if (type == 3) {
+			if (ship.shieldSystem != null) {
+				ship.shieldSystem.regenShield(ship);
 			}
+			else {
+				ship.shieldSystem = new ShieldSystem();
+				ship.shieldSystem.initShieldSystem(ship.posCur.x, ship.posCur.y);
+			}
+			//ship.shieldSystem.regenShield();
 		}
 	}
 

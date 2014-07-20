@@ -13,9 +13,9 @@ public class EnemyHandler {
 	//private Vector2f eSpawnPoint;
 	public List<Ship> enemiesShip;
 	// powerup chance = 10%, PoweredEnemy chance = 45%
-	private int poweredShieldChance = 95;
-	private int powerUpChance = 90;
-	private int poweredEnemyChance = 65;
+	private int poweredShieldChance = 90;
+	private int powerUpChance = 85;
+	private int poweredEnemyChance = 60;
 	
 	// handle spawn timing.
 	private int timerTillSpawn = 0;
@@ -143,17 +143,17 @@ public class EnemyHandler {
 		}
 	}
 	
-	public void spawnEnemy(float spawnX) {
+	/*public void spawnEnemy(float spawnX) {
 		Ship enemy = new Ship();
 		int eSpawnPointY = generateRandomNumber(1, Main.PLAYHEIGHT);
 		enemy.initShip(spawnX, eSpawnPointY, 10, 10);
 		enemiesShip.add(enemy);
 		totalEnemiesSpawned++;
-	}
+	}*/
 	
 	private void spawnEnemyCluster(float spawnX, int ammountToSpawn) {
 		// timer till spawn, so not all at once.
-		int randX = generateRandomNumber((int)spawnX-10,  (int)spawnX+10);
+		int randX = generateRandomNumber((int)spawnX-5,  (int)spawnX+5);
 		
 		// temp vriables
 		Vector2f tempSize = new Vector2f(10,10);
@@ -168,12 +168,14 @@ public class EnemyHandler {
 				enemy.type = 3;
 				tempSize = new Vector2f(8,8);
 				// set state to powerup
+				System.out.println("Spawning Shield Powerup!");
 			}
-			if(possiblePowerup > powerUpChance) {
+			else if(possiblePowerup > powerUpChance) {
 				// type 1 is powerup!
 				enemy.type = 1;
 				tempSize = new Vector2f(12,12);
 				// set state to powerup
+				System.out.println("Spawning Weapon Powerup!");
 			}
 			else if(possiblePowerup > poweredEnemyChance) {
 				// type 2 can fire at the player!
@@ -182,6 +184,7 @@ public class EnemyHandler {
 				enemy.setShipHealth((hpStrong + difficulty));
 				tempSize = new Vector2f(14,10);
 				// set state to blue
+				//System.out.println("Spawning Blue enemy!");
 				
 			}
 			else {
@@ -189,6 +192,7 @@ public class EnemyHandler {
 				enemy.type = 0;
 				enemy.setShipHealth((hpStandard + difficulty));
 				// set state to red
+				//System.out.println("Spawning red enemy");
 			}
 			int eSpawnPointY = generateRandomNumber(1, Main.PLAYHEIGHT);
 			enemy.initShip(randX, eSpawnPointY, tempSize.x, tempSize.y);

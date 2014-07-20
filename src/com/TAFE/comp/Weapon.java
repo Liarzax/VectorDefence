@@ -6,7 +6,7 @@ public class Weapon {
 	public int fireCooldown = getFireRate();
 	public int dammage = 1;
 	
-	public String name = "Standard Gun";
+	public String name = "Gun";
 	
 	public void weapon() {
 		

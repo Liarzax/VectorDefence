@@ -6,14 +6,14 @@ import org.newdawn.slick.geom.Circle;
 
 public class ShieldSystem {
 	
-	public boolean shieldEnabled = false;
-	private int shieldMax = 2;
+	private boolean shieldEnabled = false;
+	private int shieldMax = 3;
 	private int shieldCur = shieldMax;
 	
 	// curX, curY, Range;
 	Circle shield = null;
 	private float shieldRange = 24f;
-	public boolean removeShield;
+	//public boolean removeShield;
 	
 	
 	public ShieldSystem() {
@@ -21,12 +21,12 @@ public class ShieldSystem {
 	}
 	
 	public void initShieldSystem(float curX, float curY) {
-		shieldEnabled = true;
+		setShieldEnabled(true);
 		shield = new Circle(curX, curY, shieldRange);
 	}
 	
 	public void updateShieldSystem(float curX, float curY) {
-		if (shieldEnabled && shield != null) {
+		if (isShieldEnabled() && shield != null) {
 			// just give it 1hp for now?
 			
 			// update position with ship
@@ -36,43 +36,35 @@ public class ShieldSystem {
 	}
 	
 	public void renderShieldSystem(Graphics g) {
-		if (removeShield) {
-			//shield.setRadius(0);
-		}
-		else if (shieldEnabled && shield != null) {
+		if (isShieldEnabled() && shield != null) {
 			g.setColor(Color.cyan);
 			g.draw(shield);
+		}
+		else {
+			// shields off
 		}
 	}
 	
 	public void dammageShield(int dammage) {
 		shieldCur -= dammage;
-		if (shieldCur < 0) {
-			shieldEnabled = false;
-			
-			removeShield = true;
+		if (shieldCur <= 0) {
+			setShieldEnabled(false);
 			shield.setRadius(0);
 		}
 	}
 	
-	public void regenShield() {
-		if(removeShield) {
-			removeShield = false;
-			shieldEnabled = true;
-			if (shieldCur > shieldMax) {
-				shieldCur = shieldMax;
-			}
-			else {
-				shieldCur++;
-			}
+	public void regenShield(Ship ship) {
+		if(!ship.shieldSystem.isShieldEnabled()) {
+			ship.shieldSystem.setShieldEnabled(true);
 			
+			ship.shieldSystem.shield = new Circle(ship.posCur.x, ship.posCur.y, shieldRange);
+			ship.shieldSystem.shieldCur = 1;
 		}
 		else {
-			if (shieldCur > shieldMax) {
-				shieldCur = shieldMax;
-			}
-			else {
-				shieldCur++;
+			//shieldEnabled = true;
+			ship.shieldSystem.shieldCur++;
+			if (ship.shieldSystem.shieldCur > ship.shieldSystem.shieldMax) {
+				ship.shieldSystem.shieldCur = ship.shieldSystem.shieldMax;
 			}
 		}
 	}

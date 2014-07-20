@@ -15,7 +15,7 @@ How to Play
 'Space' 	Hold Key to Fire effectively.
 
 Avoid/Destroy enemies - Red/Blue Squares.
-Collect Power-ups - Yellow Squares.
+Collect Power-ups - Yellow/Cyan Squares.
 You have a little Cyan shield, it wont last long.
 
 Survive...
@@ -23,13 +23,18 @@ Survive...
 
 Changes
 ==================
+v0.1.4-Alpha build.7;
+ - Fixed shield not powering up again after being shot down, even after picking up power-up!
+ - Fixed player taking damage from picking up power-ups.
+ - Increased chance of a shield power-up spawning.
+ - Refactored a bunch of classes to allow easier reading, editing, expanding.
+
 v0.1.3-Alpha build.6;
  - Fixed static pointers to things that should be static, like Screen Height/Width.
  - Added several checks to remove late game lagg, like bullets/enemies off the screen, etc.
- - Marginally increased the size of the Powerup, Little easier to get now.
+ - Marginally increased the size of the Power-up, Little easier to get now.
  - Elongated the Blue enemies, make them stand out now.
- - Added a new Powerup! Regenerate dem Shields! - very rare to come accross, to rare even.
- - 
+ - Added a new Power-up! Regenerate dem Shields! - very rare to come across, to rare even.
  
 v0.1.3-Alpha build.5;
  - Fixed Versioning.
@@ -54,7 +59,7 @@ TODO LIST
  
  BUG LIST
  ==================
- - Collecting powerups now dammage the player? need to fix this!
+ - 
  - 
  - 
  - 

@@ -8,6 +8,7 @@ import org.newdawn.slick.Graphics;
 
 public class BulletHandler {
 
+	//TODO Need to get these of the player/enemy firing said bullet. (In-case ship has diff sizes).
 	private int playerOffset = 8;
 	private int enemyOffset = 8;
 	List<Bullet> bullets;

@@ -20,14 +20,14 @@ public class CollisionHandler {
 					// if collide, damage enemy, remove bullet.
 					// ship type 0 = normal red, type 1 = power up yellow, type 2 = blue can fire back!
 					// bullet type 0 = players, bullet type 1 = enemies
-					if (bullets.bullets.get(b).bullet.intersects(enemies.enemiesShip.get(e).ship) && bullets.bullets.get(b).getBulletType() == 0 && (enemies.enemiesShip.get(e).type != 1 || enemies.enemiesShip.get(e).type != 3)) {
+					if (bullets.bullets.get(b).bullet.intersects(enemies.enemiesShip.get(e).ship) && bullets.bullets.get(b).getBulletType() == 0 && (enemies.enemiesShip.get(e).type != 1 && enemies.enemiesShip.get(e).type != 3)) {
 						enemies.enemiesShip.get(e).processDammage(bullets.bullets.get(b).getBulletDammage());
 						if(enemies.enemiesShip.get(e).getHealthCur() <= 0) {
 							enemies.enemiesShip.get(e).deathFromPlayer = true;
 						}
 						bullets.bullets.get(b).needsToRemove = true;
 					}
-					else if (bullets.bullets.get(b).bullet.intersects(enemies.enemiesShip.get(e).ship) && bullets.bullets.get(b).getBulletType() == 1 && (enemies.enemiesShip.get(e).type != 1 || enemies.enemiesShip.get(e).type != 3)) {
+					else if (bullets.bullets.get(b).bullet.intersects(enemies.enemiesShip.get(e).ship) && bullets.bullets.get(b).getBulletType() == 1 && (enemies.enemiesShip.get(e).type != 1 && enemies.enemiesShip.get(e).type != 3)) {
 						bullets.bullets.get(b).needsToRemove = true;
 					}
 				}
@@ -39,7 +39,7 @@ public class CollisionHandler {
 			for (int b = 0; b < bullets.getAmmountOfBullets(); b++) {
 				// if collide, damage player, remove bullet.
 				// if bullet hits players shield, and bullet is enemies, and shield is active, damage the shield.
-				if(bullets.bullets.get(b).bullet.intersects(player.shieldSystem.shield) && bullets.bullets.get(b).getBulletType() == 1 && player.shieldSystem.shieldEnabled) {
+				if(bullets.bullets.get(b).bullet.intersects(player.shieldSystem.shield) && bullets.bullets.get(b).getBulletType() == 1 && player.shieldSystem.isShieldEnabled()) {
 					player.shieldSystem.dammageShield(bullets.bullets.get(b).getBulletDammage());
 					bullets.bullets.get(b).needsToRemove = true;
 					//player.shieldSystem.removeShield = true;
@@ -58,7 +58,7 @@ public class CollisionHandler {
 			for (int e = 0; e < enemies.getAmmountOfEnemies(); e++) {
 				// if collide, damage player, remove ship.
 				// type 0 = normal red, type 1 = power up yellow, type 2 = blue can fire back!
-				if (enemies.enemiesShip.get(e).ship.intersects(player.ship) && (enemies.enemiesShip.get(e).type != 1 || enemies.enemiesShip.get(e).type != 3)) {
+				if (enemies.enemiesShip.get(e).ship.intersects(player.ship) && (enemies.enemiesShip.get(e).type != 1 && enemies.enemiesShip.get(e).type != 3)) {
 					player.processDammage(enemies.enemiesShip.get(e).getShipCollisionDammage());
 					enemies.enemiesShip.get(e).collideWithPlayer = true;
 					enemies.enemiesShip.get(e).deathFromPlayer = true;
