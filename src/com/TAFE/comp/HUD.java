@@ -137,6 +137,10 @@ public class HUD {
 		g.draw(lPanel);
 		
 		g.drawString(player.getWeaponName(), leftXPadding, 45);
+		g.drawString("Level = "+player.getWeaponLevel(), leftXPadding, 65);
+		g.drawString("Exp = " + player.getWeaponEXP(), leftXPadding, 85);
+		
+		
 	}
 	
 	private void displayBottomPanel(Graphics g, Color color, Ship player) {

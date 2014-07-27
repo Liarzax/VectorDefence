@@ -20,7 +20,7 @@ import org.newdawn.slick.particles.ParticleSystem;
 
 public class Main extends BasicGame{
 	
-	final static int majorVersion = 0, minorVersion = 1, bugfix = 4, buildRev = 7;
+	final static int majorVersion = 0, minorVersion = 1, bugfix = 5, buildRev = 8;
 	final static String devStage = "Alpha";
 	final static String version = "v"+majorVersion+"."+minorVersion+"."+bugfix+"-"+devStage+"   build."+buildRev;
 	final static String title = "Vector Defense "+version;
@@ -35,11 +35,12 @@ public class Main extends BasicGame{
 	
 	private InstructionsLoop instructionsScreen = new InstructionsLoop();
 	
-	private Ship 			 player 	= new Ship();
-	private BulletHandler 	 bullets 	= new BulletHandler();
-	private EnemyHandler 	 enemies 	= new EnemyHandler();
-	private CollisionHandler collisions = new CollisionHandler();
-	private HUD 			 hud 		= new HUD();
+	private Ship 			  player 	 = new Ship();
+	private BulletHandler 	  bullets 	 = new BulletHandler();
+	private EnemyHandler 	  enemies 	 = new EnemyHandler();
+	private CollisionHandler  collisions = new CollisionHandler();
+	private HUD 			  hud 		 = new HUD();
+	private BackgroundHandler background = new BackgroundHandler();
 	
 	public Main(String title){
 		super(title);
@@ -56,7 +57,8 @@ public class Main extends BasicGame{
 	}
 
 	public void init(GameContainer container) throws SlickException {
-		
+		// init the background
+		background.initBackgroundHandler();
 		
 		//temp x, y, width, height (25/10 is small).
 		player.initShip(115, 200, 25, 10);
@@ -67,6 +69,9 @@ public class Main extends BasicGame{
 		// force player shield to activate
 		player.shieldSystem.initShieldSystem(player.posCur.x, player.posCur.y);
 		bullets.initBulletHandler();
+		// force player to have higher/better weapons
+			// weapon initialized to = 0 | need 1 or more to fire a bullet.
+		player.setWeaponLevel(1);
 		
 		// temp enemy spawn // height 400, width 800.
 		enemies.initEnemyHandler(800, 400);
@@ -134,11 +139,22 @@ public class Main extends BasicGame{
 				}
 				else {
 					// 0 = bullet type player, 1 = bullet type enemy
-					bullets.createNewBullet((player.getPosCur().x + 10), player.getPosCur().y, player.getDammage(), 0);
+					if (player.getWeaponLevel() >= 1) {
+						bullets.createNewBullet((player.getPosCur().x + 10), player.getPosCur().y, player.getDammage(), 0);
+					}
+					if (player.getWeaponLevel() >= 2) {
+						bullets.createNewBullet((player.getPosCur().x + 10), (player.getPosCur().y + 5), player.getDammage(), 0);
+					}
+					if (player.getWeaponLevel() >= 3) {
+						bullets.createNewBullet((player.getPosCur().x + 10), (player.getPosCur().y - 5), player.getDammage(), 0);
+					}
+					
 					player.setFireCooldown(0);
 				}
 			}
 		}
+		
+		background.updateBackgroundHandler(bullets, enemies, player);
 		
 		player.updateShip();
 		enemies.updateEnemies(delta, bullets);
@@ -162,15 +178,15 @@ public class Main extends BasicGame{
 	}
 	
 	public void renderMainGame(Graphics g) {
-		if (!player.needsToRemove) {
-			player.renderShip(g, Color.green);
-		}
-		else {
-			player.renderShip(g, Color.black);
-		}
+		background.renderBackgroundHandler(g);
+		
+		player.renderShip(g, Color.green);
 		
 		enemies.renderEnemies(g, Color.red);
 		bullets.renderBullets(g, Color.white);
 		hud.renderHUD(g, Color.white, player);
+		
+		// debugging stuff
+		g.drawString("Debugging =" + enemies.getTotalEnemiesSpawned(), 1, 185);
 	}
 }

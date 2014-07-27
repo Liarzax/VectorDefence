@@ -25,8 +25,11 @@ public class Ship {
 	
 	// ship type 0 = normal red, type 1 = power up yellow, type 2 = blue can fire back!
 	public int type = 0;
+	private boolean isBossShip = false;
 	
 	private Weapon weapon = new Weapon();
+	private int weaponLevel = 0;
+	private int weaponEXP = 0;
 	
 	// maby depend this on hull type, same as hp, maxhp, etc?
 	private int shipCollisionDammage = 1;
@@ -74,12 +77,14 @@ public class Ship {
 	}
 	
 	public void renderShip(Graphics g, Color color) {
-		g.setColor(color);
-		g.draw(ship);
-		
-		if (shieldSystem != null) {
-			if(shieldSystem.isShieldEnabled()) {
-				shieldSystem.renderShieldSystem(g);
+		if (!needsToRemove) {
+			g.setColor(color);
+			g.draw(ship);
+			
+			if (shieldSystem != null) {
+				if(shieldSystem.isShieldEnabled()) {
+					shieldSystem.renderShieldSystem(g);
+				}
 			}
 		}
 	}
@@ -152,6 +157,7 @@ public class Ship {
 	public void destroyShip() {
 		// animation, sound effects, maybe power-up points, etc.
 		System.out.println("Boom!");
+		shieldSystem.setShieldEnabled(false);
 	}
 	
 	public void setShipHealth(int shipHealth) {
@@ -255,6 +261,46 @@ public class Ship {
 
 	public void setShieldSystem(ShieldSystem shieldSystem) {
 		this.shieldSystem = shieldSystem;
+	}
+
+	public int getWeaponLevel() {
+		return weaponLevel;
+	}
+
+	public void setWeaponLevel(int weaponLevel) {
+		this.weaponLevel = weaponLevel;
+	}
+
+	public int getWeaponEXP() {
+		return weaponEXP;
+	}
+
+	public void setWeaponEXP(int weaponEXP) {
+		this.weaponEXP = weaponEXP;
+	}
+
+	public boolean isBossShip() {
+		return isBossShip;
+	}
+
+	public void setBossShip(boolean isBossShip) {
+		this.isBossShip = isBossShip;
+	}
+
+	public float getAcceleration() {
+		return acceleration;
+	}
+
+	public void setAcceleration(float acceleration) {
+		this.acceleration = acceleration;
+	}
+
+	public float getMaxSpeed() {
+		return maxSpeed;
+	}
+
+	public void setMaxSpeed(float maxSpeed) {
+		this.maxSpeed = maxSpeed;
 	}
 	
 	

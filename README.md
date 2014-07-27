@@ -23,6 +23,15 @@ Survive...
 
 Changes
 ==================
+v0.1.5-Alpha build.8;
+ - Fixed bug where player dies but shield still draws.
+ - Fixed some enemies not spawning at the correct size.
+ - Cleaned up the way the player is drawn to the screen.
+ - Added ability to level up cannon and increase shots.
+ - Added big red miniBoss.
+ - tweeked enemies speeds, and powerup chance.
+ - Started work on the background but got side tracked.
+ 
 v0.1.4-Alpha build.7;
  - Fixed shield not powering up again after being shot down, even after picking up power-up!
  - Fixed player taking damage from picking up power-ups.
@@ -50,18 +59,21 @@ v0.1.3-Alpha build.4;
 TODO LIST
 ==================
  - Indicator for Player Shield.
- - Way to recharge, increase Player Shield when depleted/deactivated.
  - Enemies with shields, to mix things up a bit.
  - State Machine for player Weapon/s
  - Game States and stash the instruction loop into that, maybe add game over/restart, etc.
- - 
+ - Background!
  
  
  BUG LIST
  ==================
+ - Wierd bug when moving right and firing, as bullets near the edge of the screen they change formation?
  - 
  - 
  - 
  - 
  - 
- - 
+ 
+ 
+ 
+ 
