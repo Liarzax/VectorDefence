@@ -20,7 +20,7 @@ import org.newdawn.slick.particles.ParticleSystem;
 
 public class Main extends BasicGame{
 	
-	final static int majorVersion = 0, minorVersion = 1, bugfix = 5, buildRev = 8;
+	final static int majorVersion = 0, minorVersion = 1, bugfix = 5, buildRev = 9;
 	final static String devStage = "Alpha";
 	final static String version = "v"+majorVersion+"."+minorVersion+"."+bugfix+"-"+devStage+"   build."+buildRev;
 	final static String title = "Vector Defense "+version;
@@ -121,37 +121,72 @@ public class Main extends BasicGame{
 			// process input.
 			if (input.isKeyDown(Keyboard.KEY_W) || input.isKeyDown(Keyboard.KEY_UP)){
 				player.handleShipUp(delta);
+				if (player.overDriveActive) {
+					player.handleShipUp(delta);
+				}
 			}
 			if (input.isKeyDown(Keyboard.KEY_S) || input.isKeyDown(Keyboard.KEY_DOWN)){
 				player.handleShipDown(delta);
+				if (player.overDriveActive) {
+					player.handleShipDown(delta);
+				}
 			}
 			if (input.isKeyDown(Keyboard.KEY_A) || input.isKeyDown(Keyboard.KEY_LEFT)){
 				player.handleShipLeft(delta);
+				if (player.overDriveActive) {
+					player.handleShipLeft(delta);
+				}
 			}
 			if (input.isKeyDown(Keyboard.KEY_D) || input.isKeyDown(Keyboard.KEY_RIGHT)){
 				player.handleShipRight(delta);
+				if (player.overDriveActive) {
+					player.handleShipRight(delta);
+				}
+			}
+			if (input.isKeyDown(Keyboard.KEY_SPACE) && (player.overdriveCooldownCur >= player.overdriveCooldownMax)) {
+				player.overDriveActive = true;
+			}
+			
+			// Player Cooldowns
+			if (player.overDriveActive) {
+				player.overdriveDuration++;
+				if (player.overdriveDuration > player.overdriveDurationMax) {
+					player.overDriveActive = false;
+					player.overdriveDuration = 0;
+					player.overdriveCooldownCur = 0;
+				}
+			}
+			if (player.overdriveCooldownCur < player.overdriveCooldownMax) {
+				player.overdriveCooldownCur++;
+			}
+			if (player.getFireCooldown() <= player.getFireRate()) {
+				player.setFireCooldown(player.getFireCooldown() + 1);
 			}
 			
 			// FIRE SON!
-			if (input.isKeyPressed(Keyboard.KEY_SPACE) || input.isKeyDown(Keyboard.KEY_SPACE)) {
-				if(player.getFireCooldown() < player.getFireRate()) {
-					player.setFireCooldown(player.getFireCooldown() + 1);
+			if (player.getFireCooldown() >= player.getFireRate()) {
+				if (player.getWeaponLevel() >= 1) {
+					bullets.createNewBullet((player.getPosCur().x + 10), player.getPosCur().y, player.getDammage(), 0);
 				}
-				else {
-					// 0 = bullet type player, 1 = bullet type enemy
-					if (player.getWeaponLevel() >= 1) {
-						bullets.createNewBullet((player.getPosCur().x + 10), player.getPosCur().y, player.getDammage(), 0);
-					}
-					if (player.getWeaponLevel() >= 2) {
-						bullets.createNewBullet((player.getPosCur().x + 10), (player.getPosCur().y + 5), player.getDammage(), 0);
-					}
-					if (player.getWeaponLevel() >= 3) {
-						bullets.createNewBullet((player.getPosCur().x + 10), (player.getPosCur().y - 5), player.getDammage(), 0);
-					}
-					
-					player.setFireCooldown(0);
+				if (player.getWeaponLevel() >= 2) {
+					bullets.createNewBullet((player.getPosCur().x + 10), (player.getPosCur().y + 5), player.getDammage(), 0);
 				}
+				if (player.getWeaponLevel() >= 3) {
+					bullets.createNewBullet((player.getPosCur().x + 10), (player.getPosCur().y - 5), player.getDammage(), 0);
+				}
+				
+				player.setFireCooldown(0);
 			}
+			
+			// template for cooldoown stuff
+			/*if (player.getFireCooldown() <= player.getFireRate()) {
+				player.setFireCooldown(player.getFireCooldown() + 1);
+			}
+			// FIRE SON!
+			if (input.isKeyPressed(Keyboard.KEY_SPACE) && (player.getFireCooldown() >= player.getFireRate())) {
+								
+			}*/
+			
 		}
 		
 		background.updateBackgroundHandler(bullets, enemies, player);
@@ -187,6 +222,7 @@ public class Main extends BasicGame{
 		hud.renderHUD(g, Color.white, player);
 		
 		// debugging stuff
-		g.drawString("Debugging =" + enemies.getTotalEnemiesSpawned(), 1, 185);
+		//g.drawString("Debugging =" + enemies.getTotalEnemiesSpawned(), 1, 185);
+		
 	}
 }
