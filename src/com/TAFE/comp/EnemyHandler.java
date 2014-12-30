@@ -30,14 +30,11 @@ public class EnemyHandler {
 	// dif enemy healths
 	private int hpStrong = 4;
 	private int hpStandard = 2;
-	private int hpMiniBoss = 10;
 	
 	// boss stuff
 	private boolean spawningBoss = false;
 	private int bossDestroyedTimes = 0;
 	private boolean isBossSpawned = false;
-	
-	
 	
 	// this is unused as of yet.
 	// type 0 = normal red, type 1 = power up yellow, type 2 = blue can fire back!
@@ -120,31 +117,6 @@ public class EnemyHandler {
 				if (enemiesShip.get(i).isBossShip()) {
 					//enemiesShip.get(i).handleShipLeft(delta);
 					
-					// calculate blue (blue = 1) boss bullets
-					if (enemiesShip.get(i).bossType == 2) { 
-						if(enemiesShip.get(i).getFireCooldown() < enemiesShip.get(i).getFireRate()) {
-							enemiesShip.get(i).setFireCooldown(enemiesShip.get(i).getFireCooldown() + 1);
-						}
-						else {
-							// 0 = bullet type player, 1 = bullet type enemy
-							if (difficulty >= 0) {
-								bullets.createNewBullet(enemiesShip.get(i).posCur.x - 6, enemiesShip.get(i).posCur.y, enemiesShip.get(i).getDammage(), 1);
-								//enemiesShip.get(i).setFireCooldown(0);
-							}
-							if (difficulty >= 4) {
-								bullets.createNewBullet(enemiesShip.get(i).posCur.x - 6, enemiesShip.get(i).posCur.y - 4, enemiesShip.get(i).getDammage(), 1);
-								//bullets.createNewBullet(enemiesShip.get(i).posCur.x - 1, enemiesShip.get(i).posCur.y + 2, enemiesShip.get(i).getDammage(), 1);
-								//enemiesShip.get(i).setFireCooldown(0);
-							}
-							if (difficulty >= 8) {
-								bullets.createNewBullet(enemiesShip.get(i).posCur.x - 6, enemiesShip.get(i).posCur.y + 4, enemiesShip.get(i).getDammage(), 1);
-								//enemiesShip.get(i).setFireCooldown(0);
-							}
-							
-							enemiesShip.get(i).setFireCooldown(0);
-						}			
-					}
-					
 				}
 				
 				enemiesShip.get(i).handleShipLeft(delta);
@@ -196,13 +168,7 @@ public class EnemyHandler {
 					enemiesShip.get(i).renderShip(g, Color.cyan);
 				}
 				else if (enemiesShip.get(i).type == 10) {
-					if (enemiesShip.get(i).bossType == 1) {
-						enemiesShip.get(i).renderShip(g, Color.red);
-					}
-					else if (enemiesShip.get(i).bossType == 2) {
-						enemiesShip.get(i).renderShip(g, Color.blue);
-					}
-					
+					enemiesShip.get(i).renderShip(g, Color.red);
 				}
 				else {
 					enemiesShip.get(i).renderShip(g, color);
@@ -219,7 +185,7 @@ public class EnemyHandler {
 		
 		Ship enemy = new Ship();
 		enemy.type = 10;
-		enemy.setShipHealth(hpMiniBoss * (difficulty + 1));
+		enemy.setShipHealth((hpStrong * difficulty));
 		enemy.setMaxSpeed(0.04f);
 		tempSize = new Vector2f(20,20);
 		
@@ -230,18 +196,6 @@ public class EnemyHandler {
 		
 		enemy.initShip(randX, eSpawnPointY, tempSize.x, tempSize.y);
 		enemy.shieldSystem.initShieldSystem(randX, eSpawnPointY);
-		// if red1 boss do this, else if blue2 boss continue
-		int tempBossType = generateRandomNumber(1, 3);
-		//int tempBossType = 2;
-		if (tempBossType == 1) {
-			enemy.shieldSystem.setShieldMax(enemy.shieldSystem.getShieldMax() * (difficulty + 1));
-			enemy.shieldSystem.setShieldCur(enemy.shieldSystem.getShieldMax());
-			enemy.bossType = 1;
-		}
-		else if (tempBossType == 2) {
-			enemy.setFireRate((80 - difficulty));
-			enemy.bossType = 2;
-		}
 		enemy.shieldSystem.shield.setRadius(48);
 		enemy.setBossShip(true);
 		enemiesShip.add(enemy);
@@ -267,7 +221,6 @@ public class EnemyHandler {
 				// type 3 is shield regen powerup!
 				enemy.type = 3;
 				tempSize = new Vector2f(8,8);
-				enemy.setMaxSpeed(0.10f);
 				// set state to powerup
 				System.out.println("Spawning Shield Powerup!");
 			}
@@ -275,7 +228,6 @@ public class EnemyHandler {
 				// type 1 is powerup!
 				enemy.type = 1;
 				tempSize = new Vector2f(12,12);
-				enemy.setMaxSpeed(0.10f);
 				// set state to powerup
 				System.out.println("Spawning Weapon Powerup!");
 			}

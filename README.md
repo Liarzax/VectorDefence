@@ -23,14 +23,6 @@ Survive...
 
 Changes
 ==================
-v0.1.5-Alpha build.9;
- - Changed shooting to autofire now.
- - Changed the way the miniBoss works, and added the blue version.
- - Increased the shield strengh of the red miniBoss.
- - Slowed down the weapon fire rate buff, and increased the amount of powerups required to level up cannon.
- - Added a Speed Burst ability, activated via the [SPACE] key, has cooldown (Short currently).
- - Updates to the Instructions Loop.
- 
 v0.1.5-Alpha build.8;
  - Fixed bug where player dies but shield still draws.
  - Fixed some enemies not spawning at the correct size.
@@ -67,16 +59,15 @@ v0.1.3-Alpha build.4;
 TODO LIST
 ==================
  - Indicator for Player Shield.
- - More veried enemies!
+ - Enemies with shields, to mix things up a bit.
  - State Machine for player Weapon/s
  - Game States and stash the instruction loop into that, maybe add game over/restart, etc.
  - Background!
- - Add indicator for speed burst cooldown/ready/etc?
  
  
  BUG LIST
  ==================
- - Intermitent Wierd bug when moving right and firing, as bullets near the edge of the screen they change formation?
+ - Wierd bug when moving right and firing, as bullets near the edge of the screen they change formation?
  - 
  - 
  - 

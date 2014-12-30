@@ -26,8 +26,6 @@ public class Ship {
 	// ship type 0 = normal red, type 1 = power up yellow, type 2 = blue can fire back!
 	public int type = 0;
 	private boolean isBossShip = false;
-	// boss type 1 = red, 2 = blue
-    public int bossType = 0;
 	
 	private Weapon weapon = new Weapon();
 	private int weaponLevel = 0;
@@ -38,15 +36,6 @@ public class Ship {
 	
 	// lets give the ships a SHIELD!
 	ShieldSystem shieldSystem = new ShieldSystem();
-	
-	// overdrive
-	int overdriveCooldownCur = 0;
-	int overdriveCooldownMax = 120;
-	int overdriveDuration = 0;
-	int overdriveDurationMax = 20;
-	boolean overDriveActive = false;
-	
-
 	
 	public void Ship() {
 		
@@ -199,7 +188,7 @@ public class Ship {
 	public void proccessPowerup(Ship ship, int type) {
 		// powerup augments ship!
 		if (type == 1) {
-			ship.weapon.fireRate -= 1;
+			ship.weapon.fireRate -= 2;
 			ship.setDammage(ship.getDammage() + 1);
 		}
 		if (type == 3) {

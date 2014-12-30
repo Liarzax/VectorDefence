@@ -83,7 +83,7 @@ public class CollisionHandler {
 					// temp bullet leveling stuff.
 					if (enemies.enemiesShip.get(e).type == 1) {
 						player.setWeaponEXP(player.getWeaponEXP() + 1);
-						if (player.getWeaponEXP() >= 5) {
+						if (player.getWeaponEXP() >= 3) {
 							player.setWeaponLevel(player.getWeaponLevel() + 1);
 							player.setWeaponEXP(0);
 						}
