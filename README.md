@@ -23,6 +23,17 @@ Survive...
 
 Changes
 ==================
+v0.1.5-Alpha build.10;
+ - Updated from lwjgl to libGDX.
+ - Added support for Android, iOS, PC;
+ -- Android Movement via Screen Corners.
+ -- Top Left, Left, Bottom Left, Top Right, Right & Bottom Right.
+ - Display Bug;
+ -- Left Panel does not show Information.
+ -- Bottom Panel is on the Top & Does not show Information.
+ - Movement Speed;
+ -- Faster than Prev Movement.
+ 
 v0.1.5-Alpha build.9;
  - Changed shooting to autofire now.
  - Changed the way the miniBoss works, and added the blue version.

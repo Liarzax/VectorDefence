@@ -24,3 +24,7 @@
 # Custome for Eclipse
 .project
 .classpath
+
+## Gradle
+.gradle
+#build/
